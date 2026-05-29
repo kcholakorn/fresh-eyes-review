@@ -161,6 +161,39 @@ Mode: A (blind)   |   Scope: docs/handover/   |   Personas: 3
 - Mode A deliberately **cannot** read code, so it tests document self-sufficiency,
   not factual accuracy. Use Mode B/C to check for drift against the source.
 
+## FAQ
+
+**Does it edit or "fix" my docs?**
+No. It is strictly read-only — it produces a report in the chat and never edits
+files, opens PRs, proposes diffs, or runs anything with side effects.
+
+**How is this different from just asking Claude to "review my doc"?**
+A normal review reads every file at once with perfect recall — it never feels the
+confusion a real reader does. This skill imposes human reading constraints
+(sequential, one file at a time, limited memory, fatigue) so it surfaces the
+points where a real person actually stalls.
+
+**What language is the report in?**
+The same language as the documents being reviewed — Thai docs produce a Thai
+report, English docs an English report — so flow and word-level ambiguity are
+judged in the reader's real language.
+
+**Can I choose who the readers are?**
+Yes. You define the personas (role + years of experience + dev level). If you
+don't, it defaults to three: a QA (3y, low dev), a mid-level dev (3y), and a
+tech lead (10y).
+
+**Blind vs. full-repo mode — which do I want?**
+Use **Mode A (blind)** to test whether the docs stand on their own (it can't read
+code). Use **Mode B (full repo)** to also run tasks from the docs and catch
+drift — cited `file:line`, values, or links that no longer match the source.
+**Mode C** runs both and compares.
+
+**Does it send my docs anywhere?**
+It only reads the files you point it at and writes the report into the chat — it
+never pushes to GitHub or any external service. (As with all Claude Code usage,
+the document text is processed by the model to generate the review.)
+
 ## Contributing
 
 Issues and pull requests are welcome — especially additional persona archetypes,
