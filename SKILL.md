@@ -171,8 +171,14 @@ background, so the points where they stumble will differ.
 
 ### Step 3 — Read like a real human (the most important rule)
 
-Every persona must read under these constraints — **do not behave like an
-all-knowing AI:**
+**For this read you are NOT an AI. You are the specific person in the persona** —
+a busy, ordinary human with a normal memory and limited patience, reading on a
+normal screen. You did **not** ingest the whole folder at once, and you cannot
+recall everything perfectly. If you catch yourself "knowing" something only
+because you scanned ahead, stop — the real reader wouldn't have it yet. That
+instinct to be a helpful all-knowing assistant is exactly what to suppress here.
+
+Read under these constraints:
 
 1. **Read sequentially, file by file**, the way a real person would open them
    (start from the README / index / entry point the docs point to). Follow links
@@ -181,14 +187,20 @@ all-knowing AI:**
 2. **Limited memory:** at any point you only know what you've read *so far*. If
    file 7 uses a term defined back in file 2, can you still recall it? If you'd
    have to scroll back to find it, that's a friction point.
-3. **You get tired, bored, and lost:** report the **real feelings** during the
+3. **Internal codes and acronyms do NOT stick in a human's head.** A real person
+   does **not** remember what `HB-07`, `M28c`, or `8e` mean just because they
+   appeared a few files — or a few paragraphs — ago. When you hit one, react like
+   a person genuinely would ("wait… what was HB-07 again?") and treat having to
+   look it up — or not being able to — as friction. **Never silently "recall" the
+   meaning of an internal code.** That's the AI talking, not the human.
+4. **You get tired, bored, and lost:** report the **real feelings** during the
    read — where fatigue sets in, where you want to skip, where you lose the
    thread because links bounce around.
-4. **Never open with "I now have the whole picture in my head."** Simulate the
+5. **Never open with "I now have the whole picture in my head."** Simulate the
    genuine experience of someone who just opened a pile of files and has to climb
    it gradually — including the "ugh, this is a lot, where do I even start?"
    reaction.
-5. **Keep a running log while reading** ("file A: understood… file B: started
+6. **Keep a running log while reading** ("file A: understood… file B: started
    getting confused at X because the term wasn't defined yet… file C: had to
    scroll back to A") so feedback reflects the actual reading order, not
    hindsight knowledge.
@@ -239,7 +251,11 @@ Close with a cross-persona overview:
 1. **🚩 What will make the receiving team ask "what did you even send me?"** —
    list these clearly, ordered by severity. This is the heart of the output.
 2. **🔧 Fix list** — ordered by **impact / effort** (what to fix first for the
-   biggest gain). For each, state what the reader gains once it's fixed.
+   biggest gain). For each, state what the reader gains once it's fixed, **plus a
+   final "gut reaction" column** — the reader's actual inner voice at that spot,
+   in their own raw words (e.g. "ส่งอะไรมาเนี่ย งง หาไม่เจอ" / "wait, where do I
+   even start?"). Write the gut reaction in the **same language as the docs**.
+   This column is what makes the cost land emotionally — not just as a category.
 3. **Classify every finding** as one of:
    - **Real bug** = drift / wrong info / broken link (must fix)
    - **By-design** = intentional (maybe just add a note)
@@ -266,7 +282,7 @@ Mode: <A / B / C>   |   Scope: <path>   |   Personas: <n>
 
 1. Comprehension: ~__%  → <what they actually grasped / where they misread>
 2. Friction points:
-   - `file:section` — <symptom: stopped / re-read / got lost>
+   - `file:section` — <symptom: stopped / re-read / got lost> — 😤 "<gut reaction in the reader's own words, docs' language>"
 3. Doc accuracy (B/C): <drift found / "no drift">
 4. Fatigue & flow: <fun/tiring/painful where, smooth or choppy>
 5. Verdict: <can they work on day one? keep reading or bounce it?>
@@ -284,8 +300,9 @@ Mode: <A / B / C>   |   Scope: <path>   |   Personas: <n>
 ### 🚩 What makes the team bounce it back
 1. ...
 ### 🔧 Fix list (by impact / effort)
-| # | Issue | Type (bug / by-design / sim-limit) | Impact | Effort | Payoff once fixed |
-|---|-------|------------------------------------|--------|--------|-------------------|
+| # | Issue | Type (bug / by-design / sim-limit) | Impact | Effort | Payoff once fixed | 😤 Gut reaction (reader's words, docs' language) |
+|---|-------|------------------------------------|--------|--------|-------------------|--------------------------------------------------|
+| 1 | README has no "new dev start here" link | bug (routing) | high | tiny | unblocks every new reader | "ส่งอะไรมาเนี่ย งง หาไม่เจอ" |
 ### Mode C only — blind vs. full comparison
 - Needs the code to understand: ...
 - Reads fine blind, but code proves the doc wrong (drift): ...
@@ -300,3 +317,7 @@ Mode: <A / B / C>   |   Scope: <path>   |   Personas: <n>
 - Reusable on any folder of documents (generic).
 - **Never modifies any file** — strictly read-only.
 - Report is written in the same language as the reviewed documents.
+- The reviewer reads as a **real human, not an AI** — sequential, limited memory,
+  does not silently recall internal codes (`HB-07`, `M28c`), gets tired.
+- Friction points and the fix list each carry a **gut-reaction** quote in the
+  reader's own words (in the docs' language).
