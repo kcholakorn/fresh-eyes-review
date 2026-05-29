@@ -169,4 +169,4 @@ report-format ideas, and real-world "this is what tripped my team up" examples.
 
 ## License
 
-[MIT](LICENSE) © 2026 Cholakorn Kokulkiat
+Released under the [MIT License](LICENSE).
