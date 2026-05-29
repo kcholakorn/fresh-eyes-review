@@ -231,6 +231,26 @@ For each one, ask on behalf of a new reader:
 - Any code with **no definition anywhere in the docs** → flag it as a
   **"the team will definitely ask about this"** item.
 
+**If the doc set is scattered** (no single entry/index, several overlapping docs,
+or docs that disagree), the decoder check widens into a **doc-set map**, and the
+scatter itself becomes a top finding. Watch for and report:
+
+- **No source of truth / no map** — nothing tells the reader which doc to open
+  first, what each is for, or which is current. Build the inventory yourself
+  (*file → audience → which version it describes → current?*) and flag that the
+  reader had to.
+- **Cross-doc contradiction** — two docs describe the system differently (e.g.
+  old POC vs current, Postgres vs SQLite). Name which is canonical and that a
+  reader **can't tell**. Top-severity — not a nitpick.
+- **Stale front door** — the doc a reader naturally starts at (e.g. README)
+  describes an older/different system than the live one. The most dangerous kind:
+  the reader trusts it and walks away **confidently wrong**.
+
+Treat **"no single source of truth"** as its own bug class — the fragmentation is
+the finding, independent of how good any one doc is. (When docs are this scattered,
+comprehension can be *high yet wrong* — note when a reader would feel sure but has
+the wrong picture.)
+
 ### Step 5 — Per-persona report
 
 Each persona produces all five of these:
@@ -355,6 +375,11 @@ Mode: <A / B / C>   |   Scope: <path>   |   Personas: <n>
 | Code/term | Defined in docs? | Distance from use | Verdict |
 |-----------|------------------|-------------------|---------|
 | M28b      | ❌ nowhere       | -                 | 🚩 team will ask |
+
+<!-- Scattered doc set? Replace/augment with a Doc inventory and flag missing
+     source-of-truth + contradictions as top findings:
+| File | Audience | Version it describes | Current? | Links | -->
+
 
 ────────────────────────────────────────
 ## 📋 Combined summary
