@@ -75,6 +75,23 @@ confirm the fixes landed.
 
 ---
 
+## Cite only what you verified
+
+Every `file:line`, heading anchor, and link in the report must be **derived from
+the actual file content you opened** — not from memory or a plausible guess.
+
+- **Never fabricate a heading anchor.** Don't assume the GitHub/Markdown slug
+  from the heading text. (Real example: a heading "Phase / Mini-Phase / M-prefix
+  codes" produces the anchor `#phase--mini-phase--m-prefix-codes`, *not*
+  `§"M-prefix codes"`.) If you haven't confirmed the exact slug, cite the heading
+  **text** in prose and mark the precise anchor as unverified — don't invent one.
+- **Verify line numbers and quoted text** against the file before citing them.
+- A wrong link or line number is worse than none: it sends the reader nowhere and
+  makes them distrust the whole review. When unsure, say "around §X / near line
+  N (verify)" instead of stating a fake exact target.
+
+---
+
 ## Output language
 
 > Write the report in the **same language as the documents being reviewed** —
