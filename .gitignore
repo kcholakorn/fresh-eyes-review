@@ -1,0 +1,11 @@
+# Private knowledge vault junction — never publish
+.knowledge/
+.knowledge
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.idea/
+.vscode/
