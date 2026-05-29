@@ -7,6 +7,14 @@ description: >
   bounce it back ("what did you even send me?"). Reports per-persona
   comprehension, friction points, reading fatigue, doc-vs-code drift, and
   undecodable internal jargon. Read-only — never edits.
+  Use as a PRE-HANDOVER check: trigger when the user has written or just
+  finished a handover / onboarding / handbook / README / runbook and wants to
+  know whether a real person (new hire, dev, QA, tech lead) would understand it
+  before sending it to the team — or is "about to send / hand off" such a doc.
+  Also trigger on: "fresh eyes", "blind test these docs", "read this like a real
+  person", "would a new hire understand this", "will the team bounce this back".
+  Do NOT trigger for code review, writing software test cases, or finishing a
+  coding task — this reviews DOCUMENTS only.
 ---
 
 # fresh-eyes-review
@@ -31,11 +39,17 @@ Invoke this skill when the user says things like:
 
 - "blind test these docs" / "read this like a real person" / "fresh eyes"
 - "review this onboarding / handbook / handover before I send it to the team"
+- "I just finished the handover doc — is it ready to send?" / "about to hand
+  this off to the team"
 - "would a new hire actually understand this?"
 - "will the team bounce this back?"
 - "have a few team members read this and tell me what breaks"
 
 > Works on **any folder of documents** — it is generic and not tied to one repo.
+>
+> **Not** for code review, writing software test cases, or finishing a coding
+> task — this skill reviews **documents** only. If the "finish / about to send"
+> moment is about code rather than a document, this is the wrong tool.
 
 ---
 
