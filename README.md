@@ -1,9 +1,14 @@
 # fresh-eyes-review
 
-> A [Claude Code](https://docs.claude.com/en/docs/claude-code) skill that
-> simulates **real human readers** working through your handover, onboarding, or
-> handbook docs — so you catch what makes the receiving team bounce it back,
-> **before** you hit send.
+> You hand the doc to the tech team. They open it.
+> The reply lands: **"the hell is this? what did you even send me?"**
+
+A pre-handover gauge. `fresh-eyes-review` is a
+[Claude Code](https://docs.claude.com/en/docs/claude-code) skill that puts real
+human readers — QA, dev, tech lead — through your docs the way humans actually
+read (one file at a time, limited memory, getting tired and lost), then tells
+you exactly where the team will bounce it back. Run it *before* you hit send —
+not after.
 
 <p align="left">
   <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg">
@@ -20,7 +25,7 @@ test is whether the dev/QA/ops team on the other end can actually use it — and
 you usually find out *after* you've sent it, when the questions start coming back:
 
 > "Wait, what's `M28b`?" · "Where's the setup step?" · "This file doesn't exist."
-> · "…what did you even send me?"
+> · "never mind, I'll just rewrite it myself."
 
 An LLM asked to "review this doc" is a poor stand-in for that test: it reads
 every file at once and remembers everything perfectly, so it never experiences
