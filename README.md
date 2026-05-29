@@ -83,9 +83,10 @@ fix list ordered by impact/effort.
 
 ## Installation
 
-The skill is a folder named `fresh-eyes-review/` containing `SKILL.md`. Place it
-where Claude Code looks for skills — this repo is laid out so you can clone it
-directly into that location:
+Skills live in Claude Code's **skills directory** — `~/.claude/skills/` (global,
+available in every project) or a repo's own `.claude/skills/` (one project only).
+This repo is the skill folder itself (`SKILL.md` at its root), so you can clone it
+straight in:
 
 **Global** (available in every project):
 
@@ -103,9 +104,7 @@ git clone https://github.com/kcholakorn/fresh-eyes-review.git \
 
 Update later with `git -C ~/.claude/skills/fresh-eyes-review pull`.
 
-> Claude Code expects the layout `<skills-dir>/fresh-eyes-review/SKILL.md`. This
-> repo keeps `SKILL.md` at its root, so a direct clone just works. New skills are
-> picked up on the next session.
+> New skills are picked up the next time you start Claude Code.
 
 ## Usage
 
