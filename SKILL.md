@@ -263,6 +263,40 @@ Close with a cross-persona overview:
      blind mode can't open code, so it flags something as "missing" when the code
      actually has it) — call these out so the user doesn't over-correct
 
+### Step 7 — Decide the cut point (stop; don't loop forever)
+
+A doc set is never "flawless" — you can always surface one more nitpick.
+Reviewing toward zero findings is a trap that burns the owner's time. **"Done"
+means ship-ready, not perfect.** After the combined summary, state explicitly
+whether another round is warranted, using this cut point.
+
+**STOP and call it ship-ready when ALL three hold:**
+- **No 🚩 bounce-back / blocker findings remain** — nothing that makes the team
+  reject it or blocks day-one work.
+- **Target comprehension reached** across personas — default **~85–90%** (the
+  owner may set the bar; ask if unsure).
+- **Convergence** — the latest pass surfaced **no NEW high-impact finding** vs the
+  previous pass (you're now only turning up nitpicks or the same class of issue).
+
+Whatever is still open at that point is **not** a reason to keep looping. List it
+as an **"accept as-is / known"** set (tagged by-design / nice-to-have /
+simulation-limit) and stop.
+
+**Hard cap: at most ~3 review rounds per mode (A, then B).** If you hit the cap
+without clearing the bar, **STOP anyway** — do not silently start another round.
+Hand the owner a plain decision instead:
+
+> "Round N done. Remaining: <short list>. Ship it / accept these as known /
+> keep going (explicit opt-in)?"
+
+**Signs you have already passed the cut point — stop now:**
+- A round's findings are all wording/polish, or all already-tagged by-design.
+- You are re-flagging items the owner consciously chose to keep.
+- The fixes are becoming larger than the friction they remove.
+
+The skill only **recommends** stop-vs-continue; the **human makes the final ship
+call**. Advisory only — never loop past the cap on your own initiative.
+
 ---
 
 ## Report format (template)
@@ -321,3 +355,6 @@ Mode: <A / B / C>   |   Scope: <path>   |   Personas: <n>
   does not silently recall internal codes (`HB-07`, `M28c`), gets tired.
 - Friction points and the fix list each carry a **gut-reaction** quote in the
   reader's own words (in the docs' language).
+- Has a clear **cut point** — stops at ship-ready (no blockers + target
+  comprehension + convergence) or a hard cap of ~3 rounds per mode, handing the
+  ship decision to the human. It does **not** loop toward perfection.
