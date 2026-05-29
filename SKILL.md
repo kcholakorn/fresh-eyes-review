@@ -299,6 +299,26 @@ call**. Advisory only — never loop past the cap on your own initiative.
 
 ---
 
+## Reporting cadence — read everything, then one report
+
+This applies to **both modes**. Read the whole agreed scope **first**
+(sequentially, file by file, keeping the running log as Step 3 requires), then
+deliver **one consolidated report** — all personas + the decoder check + the
+combined summary + fix list — in a **single message**. Do **not** stream findings
+file-by-file or persona-by-persona as you read.
+
+- Batching the *output* must **never** become an excuse to *scan everything at
+  once*. The sequential, limited-memory reading (Step 3) is unchanged; the running
+  log in the report is where that experience shows up.
+- For a large scope, a short one-line progress ping while reading is fine
+  ("reading 12 files…"), but **findings land only in the final report**, never
+  piecemeal.
+- If the scope is too large to read in one honest pass, don't stream partial
+  findings — say so and propose narrowing the scope (see the cut point), then
+  report on the agreed slice in one go.
+
+---
+
 ## Report format (template)
 
 Use this structure (adapt the language to match the docs):
@@ -358,3 +378,5 @@ Mode: <A / B / C>   |   Scope: <path>   |   Personas: <n>
 - Has a clear **cut point** — stops at ship-ready (no blockers + target
   comprehension + convergence) or a hard cap of ~3 rounds per mode, handing the
   ship decision to the human. It does **not** loop toward perfection.
+- Delivers **one consolidated report** after reading the full scope — never
+  streams findings piecemeal (reading stays sequential internally).
