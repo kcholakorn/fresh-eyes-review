@@ -31,6 +31,10 @@ confused, give up, or bounce the document back to you.
 
 Use it as a **pre-flight check** for any document set before it goes out.
 
+> **Advisory only.** Everything this skill produces is *guidance you act on
+> yourself* — it reports and recommends, it never fixes or rewrites the docs.
+> Treat the output as a list of suggestions, not edits.
+
 ---
 
 ## When to trigger
@@ -103,7 +107,13 @@ Let the user choose before you start:
 > If the user doesn't choose, default to **A (blind)** — it best matches the
 > core question "would a new reader understand this?"
 
-**Mode details:**
+> **Recommended flow for a large doc set:** start with **Mode A (blind)** and
+> iterate — review → the author fixes the docs based on the suggestions → re-run
+> blind — until blind comprehension is solid (~80–90% across personas). *Only
+> then* move to **Mode B (full repo)** to catch drift against the code. Don't
+> jump to full-repo while the docs still fail the blind read: fix
+> self-sufficiency first, accuracy second. (The skill only recommends — the
+> author does the fixing between runs.)
 
 - **Mode A (Blind):** Read only the files inside the specified docs folder. Do
   **not** open source code, internal notes/vaults, or anything outside scope. If
