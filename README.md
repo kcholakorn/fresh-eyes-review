@@ -1,77 +1,166 @@
 # fresh-eyes-review
 
-> A Claude Code skill that simulates **real human readers** reading your
-> handover / onboarding / handbook docs — so you catch what makes the
-> receiving team bounce it back **before** you hit send.
+> A [Claude Code](https://docs.claude.com/en/docs/claude-code) skill that
+> simulates **real human readers** working through your handover, onboarding, or
+> handbook docs — so you catch what makes the receiving team bounce it back,
+> **before** you hit send.
 
-จำลองคนในทีมหลายคน (เลือกตำแหน่ง + ประสบการณ์ได้) มาอ่านเอกสารแบบมนุษย์จริง —
-เหนื่อยเป็น จำไม่หมด หลงเป็น — เพื่อจับจุดที่ทีมผู้รับจะ **งง / ย้อนอ่าน / ถามกลับ /
-ตีกลับ** ("ส่งอะไรมาวะเนี่ย") แล้วแก้ก่อนส่งจริง.
+<p align="left">
+  <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg">
+  <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-8A2BE2">
+  <img alt="Read-only" src="https://img.shields.io/badge/mode-read--only-success">
+</p>
 
 ---
 
-## ทำไมถึงมี skill นี้
+## The problem
 
-เขียนเอกสาร handover เสร็จแล้วไม่รู้ว่า "คนจริง" อ่านแล้วรู้เรื่องไหม ก่อนส่งทีม dev/QA.
-แทนที่จะเดา — ให้ Claude สวมบทผู้อ่านหลายคน (personas) อ่านแบบมนุษย์จริง (อ่านทีละไฟล์
-ตามลำดับ, ความจำจำกัด, เหนื่อย/หลงเป็น) แล้วรายงานว่าจุดไหนพัง.
+You finish writing a handover doc. You *think* it's clear. But the only real
+test is whether the dev/QA/ops team on the other end can actually use it — and
+you usually find out *after* you've sent it, when the questions start coming back:
+
+> "Wait, what's `M28b`?" · "Where's the setup step?" · "This file doesn't exist."
+> · "…what did you even send me?"
+
+An LLM asked to "review this doc" is a poor stand-in for that test: it reads
+every file at once and remembers everything perfectly, so it never experiences
+the confusion a real reader does.
+
+## The idea
+
+`fresh-eyes-review` role-plays several **human personas** (e.g. a 3-year QA, a
+mid-level dev, a 10-year tech lead) and makes each one read your docs **the way a
+human actually reads** — sequentially, one file at a time, with limited memory,
+getting tired and lost like a person would. Then it reports precisely where each
+reader stumbles, and what the team is most likely to bounce back.
+
+Think of it as a **pre-flight check** for any document set.
 
 ## What it catches
 
-- **Per-persona comprehension** — แต่ละตำแหน่ง/ประสบการณ์ เข้าใจได้กี่ %, ตรงไหนงง
-- **Friction points** — ไฟล์/บรรทัด/หัวข้อที่ทำให้หยุด ย้อนอ่าน หรือหลงทาง
-- **Reading fatigue & flow** — ตรงไหนเริ่มล้า, ตารางยาวไหวไหม, ลิงก์เยอะจนหลง thread ไหม
-- **Doc-vs-code drift** (full-repo mode) — `file:line` / ค่า / ลิงก์ ที่อ้าง ตรงกับของจริงไหม
-- **Undecodable internal jargon** — รหัส/ตัวย่อ/ศัพท์ภายใน (เช่น `M28b`, `H-beam`) ที่คนนอก
-  ถอดไม่ออกเพราะไม่มี glossary
+| | |
+|---|---|
+| 🧠 **Per-persona comprehension** | How much each role/experience level actually understood, and where they got lost |
+| 🧱 **Friction points** | The exact file / line / section that made a reader stop, re-read, or lose the thread |
+| 😮‍💨 **Reading fatigue & flow** | Where it gets tiring, whether long tables are bearable, where a reader wants to quit |
+| 🔀 **Doc-vs-code drift** *(full-repo mode)* | Cited `file:line`, values, and links that no longer match the real source |
+| 🧩 **Undecodable jargon** | Internal codes/abbreviations (e.g. `M28b`, `H-beam`) with no glossary the reader can reach |
 
-**Read-only** — รายงานอย่างเดียว ไม่แก้ไฟล์ ไม่เปิด PR ไม่เสนอ diff.
+**Read-only by design.** It reviews and reports — it never edits files, opens
+PRs, or proposes diffs.
 
-## โหมดการอ่าน
+## How it works
 
-| โหมด | ชื่อ | อ่านอะไรได้ |
-|------|------|-------------|
-| **A** | Blind / doc-only | เฉพาะโฟลเดอร์เอกสารที่ระบุ — ทดสอบว่าเอกสารยืนได้ด้วยตัวเองไหม |
-| **B** | Full repo | เปิด code/vault/config ได้ + ลองทำงานจริง + จับ drift |
-| **C** | ทั้งสอง | รัน A แล้ว B เทียบผล |
+When invoked, the skill runs a short setup and then reads:
 
-## Install
+**1. Pick a reading mode**
 
-Skill นี้คือโฟลเดอร์ `fresh-eyes-review/` ที่มี `SKILL.md` อยู่ข้างใน — เอาไปวางในที่ที่
-Claude Code อ่าน skill:
+| Mode | Name | Reads | What it adds |
+|------|------|-------|--------------|
+| **A** | Blind / doc-only | Only the docs folder | Tests whether the docs stand on their own |
+| **B** | Full repo | Code, notes, config too | Actually performs tasks from the docs + checks for drift |
+| **C** | Both | A then B | Shows what *requires* reading the code to understand |
 
-**Global (ใช้ข้ามทุกโปรเจกต์):**
+**2. Define the simulated team** — roles + years of experience + dev level. No
+input? It defaults to three readers: QA (3y, low dev) · mid-level dev (3y) · tech
+lead (10y).
+
+**3. Read like a human** — one file at a time, in order, with limited memory and
+real fatigue. One full read per persona, with a running log.
+
+**4. Report** — a per-persona breakdown (comprehension, friction, fatigue,
+verdict) plus a combined summary: *what will make the team bounce it back*, and a
+fix list ordered by impact/effort.
+
+> **Reports come out in the document's own language.** Reviewing Thai docs
+> produces a Thai report; English docs produce an English report — because flow
+> and word-level ambiguity can only be judged in the reader's actual language.
+
+## Installation
+
+The skill is a folder named `fresh-eyes-review/` containing `SKILL.md`. Place it
+where Claude Code looks for skills — this repo is laid out so you can clone it
+directly into that location:
+
+**Global** (available in every project):
+
 ```bash
 git clone https://github.com/kcholakorn/fresh-eyes-review.git \
   ~/.claude/skills/fresh-eyes-review
 ```
 
-**Project (เฉพาะ repo เดียว):**
+**Per-project** (one repo only):
+
 ```bash
 git clone https://github.com/kcholakorn/fresh-eyes-review.git \
   <your-repo>/.claude/skills/fresh-eyes-review
 ```
 
-> โครงสร้างที่ Claude Code ต้องการคือ `<skills-dir>/fresh-eyes-review/SKILL.md`.
-> repo นี้วาง `SKILL.md` ไว้ที่ root อยู่แล้ว เลย clone ลงไปตรงๆ ได้เลย.
+Update later with `git -C ~/.claude/skills/fresh-eyes-review pull`.
+
+> Claude Code expects the layout `<skills-dir>/fresh-eyes-review/SKILL.md`. This
+> repo keeps `SKILL.md` at its root, so a direct clone just works. New skills are
+> picked up on the next session.
 
 ## Usage
 
-เปิด Claude Code ในโปรเจกต์ที่มีเอกสารจะรีวิว แล้วพิมพ์อะไรก็ได้แนวนี้:
+Open Claude Code in the project that holds the docs, then either run the skill
+directly:
 
 ```
 /fresh-eyes-review
 ```
-หรือพูดเป็นภาษาคน:
+
+…or just ask in plain language:
+
 ```
-ลอง fresh eyes เอกสารใน docs/handover/ หน่อย ว่าคนใหม่อ่านแล้วรู้เรื่องไหม
+Fresh-eyes the docs in docs/handover/ — would a new hire actually understand them?
 ```
 
-Skill จะ:
-1. ถามโหมด (A / B / C)
-2. ถามว่าให้ใครอ่านบ้าง (personas — ตำแหน่ง + ประสบการณ์) หรือใช้ default 3 คน
-3. อ่านเอกสารแบบมนุษย์จริง ทีละ persona
-4. ออกรายงานต่อ persona + สรุปรวม "ทีมจะตีกลับไหม" + fix list เรียงตาม impact/effort
+The skill will ask for the mode (A / B / C) and the personas (or use the
+defaults), then read and report.
+
+## Example output (excerpt)
+
+```
+# Fresh-Eyes Review — docs/handover/
+Mode: A (blind)   |   Scope: docs/handover/   |   Personas: 3
+
+## 👤 Persona 2: Mid-level dev, 3y, doesn't know this project
+**Running log:**
+- 01-overview.md: clear, good map of the system.
+- 03-deploy.md: stalled — references "the M28b cutover" with no prior mention.
+- 04-env.md: had to scroll back twice to recall what `SBB_` vars meant.
+
+1. Comprehension: ~60% — got the architecture, lost on the release process.
+2. Friction: `03-deploy.md:§Cutover` — "M28b" used as if known.
+4. Fatigue & flow: fine until the deploy doc; the unexplained codes broke momentum.
+5. Verdict: could start reading code, but would Slack the author before deploying.
+
+## 📋 Combined summary
+### 🚩 What makes the team bounce it back
+1. `M28b` / `8e` sprint codes used throughout with no glossary anywhere.
+2. 03-deploy.md assumes prod access that a new hire doesn't have on day one.
+
+### 🔧 Fix list (by impact / effort)
+| # | Issue | Type | Impact | Effort | Payoff |
+|---|-------|------|--------|--------|--------|
+| 1 | Add a glossary for sprint codes | bug | high | low | unblocks every reader |
+| 2 | State prerequisites at top of deploy doc | by-design | med | low | fewer day-one questions |
+```
+
+## Notes & limitations
+
+- The personas are **simulations**, not your actual teammates — findings tagged
+  *simulation limit* in the report flag where a simulated reader might misjudge
+  (e.g. blind mode flagging something as "missing" that the code actually has).
+- Mode A deliberately **cannot** read code, so it tests document self-sufficiency,
+  not factual accuracy. Use Mode B/C to check for drift against the source.
+
+## Contributing
+
+Issues and pull requests are welcome — especially additional persona archetypes,
+report-format ideas, and real-world "this is what tripped my team up" examples.
 
 ## License
 
