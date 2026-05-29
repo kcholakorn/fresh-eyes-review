@@ -31,6 +31,13 @@ confused, give up, or bounce the document back to you.
 
 Use it as a **pre-flight check** for any document set before it goes out.
 
+> **Core principle — read like a human, report like an analyst.** *What* counts as
+> a problem is decided by a real human's sequential, limited-memory read — never an
+> all-at-once AI scan. The report itself is clean and structured (AI-style: tables,
+> impact/effort priority, verified `file:line` citations). The **human voice**
+> stays only in the experiential parts: the running log, fatigue & flow, the 😤
+> gut-reaction column, and the verdict.
+
 > **Advisory only.** Everything this skill produces is *guidance you act on
 > yourself* — it reports and recommends, it never fixes or rewrites the docs.
 > Treat the output as a list of suggestions, not edits.
